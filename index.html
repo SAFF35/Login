@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Affiliate Smart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #6a11cb, #2575fc); /* Latar belakang gradasi biru ke ungu */
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+    form {
+      margin: 0 auto;
+      max-width: 400px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.7); /* Transparansi hitam */
+      border-radius: 10px;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      width: 95%;
+      padding: 10px;
+      background: gold;
+      color: black;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ffd700; /* Warna tombol saat hover */
+    }
+  </style>
+</head>
+<body>
+  <h1>Login Affiliate Smart</h1>
+  <p>Silakan masukkan Kode ID dan Password Anda</p>
+  <form id="loginForm">
+    <input type="text" id="kodeid" placeholder="Kode ID" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <button type="submit">Login</button>
+  </form>
+
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      // Ambil nilai input
+      const kodeid = document.getElementById('kodeid').value;
+      const password = document.getElementById('password').value;
+
+      try {
+        // Kirim permintaan ke Google Apps Script API
+        const response = await fetch(
+          `https://script.google.com/macros/s/AKfycbw7qqeNsIhgn96NazFwXj34noBToy7R8SGU5n4R5aaQgoSSEW6pdNRq8qVqaj4HNKmiqQ/exec?kodeid=${kodeid}&password=${password}`
+        );
+        const result = await response.json();
+
+        if (result.success) {
+          // Jika login berhasil, arahkan ke dashboard
+          window.location.href = `https://saff35.github.io/KB/?kodeid=${kodeid}`;
+        } else {
+          // Jika login gagal, tampilkan pesan error
+          alert('Kode ID atau Password salah!');
+        }
+      } catch (error) {
+        // Tampilkan pesan error jika ada masalah
+        alert('Terjadi kesalahan. Silakan coba lagi.');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>
